@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using FluentAssertions;
+using Oceans.Exercise;
 
 namespace Oceans.Test
 {
@@ -84,13 +85,27 @@ namespace Oceans.Test
                 PaymentType = PaymentType.AmericanExpress
             };
 
-            Assert.True(false, "Finish this test and remove this line");
+            Assert.True(user.ExpiredSubscriptions ==2);
         }
 
         [Fact]
         public void SubscriptionsExpiringNextYearNextMonth()
         {
-            Assert.True(false, "Implement this test and remove this line");
+            var date = DateTime.Now.AddYears(+1).AddMonths(+1);
+
+            var subscriptions = new List<Subscription>
+            {
+                new Subscription(date.Month, date.Year) { Name = "Netflix" },
+                new Subscription(date.Month, date.Year) { Name = "Amazon Prime" }
+            };
+
+            var user = new User(subscriptions)
+            {
+                Name = "Mike Mora",
+                PaymentType = PaymentType.AmericanExpress
+            };
+
+            user.ExpiredSubscriptions.Should().Be(0);
         }
 
         [Fact]
@@ -110,7 +125,7 @@ namespace Oceans.Test
                 PaymentType = PaymentType.AmericanExpress
             };
 
-            Assert.True(false, "Implement this using fluent assertions and remove this line");
+            user.ExpiredSubscriptions.Should().Be(2);        
         }
 
         [Fact]
@@ -130,7 +145,7 @@ namespace Oceans.Test
                 PaymentType = PaymentType.AmericanExpress
             };
 
-            user.UpdateUserName();
+            user.UpdateUserName(out string newname);
 
             Assert.True(user.Name == "Oceans Code Experts", "User name updated successfully");
 

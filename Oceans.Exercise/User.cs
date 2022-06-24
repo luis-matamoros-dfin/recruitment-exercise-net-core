@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Oceans.Exercise
@@ -37,14 +38,14 @@ namespace Oceans.Exercise
             get
             {
                 //Use LINQ to get the right number
-                return Subscriptions.Select(_ => 0).FirstOrDefault();
+                return Subscriptions.Where(x => new DateTime(x.ExpirationYear,x.ExpirationMonth,1) < DateTime.Today).Count();
             }
         }
 
         /// <summary>
         /// Rewrite this method using discard for output variable
         /// </summary>
-        public void UpdateUserName()
+        public void UpdateUserName(out string NewName)
         {
             const string strForExercise = "1";
 
@@ -52,14 +53,21 @@ namespace Oceans.Exercise
             {
                 Name = "Oceans Code Experts";
             }
+            NewName = Name;
         }
 
         /// <summary>
         /// Rewrite this method to return a tuple of Name, PaymentType and the local variable
         /// </summary>
-        public void UserInformation()
+        public (string,PaymentType, string ) UserInformation()
         {
-            bool codeExperts = true;
+            const string strForExercise = "1";
+
+            if (int.TryParse(strForExercise, out int myOutputVariable))
+            {
+                Name = "Recruiting Oceans Code Experts";
+            }
+            return (Name, PaymentType, strForExercise);
         }
 
         /// <summary>
